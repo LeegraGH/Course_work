@@ -146,6 +146,11 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="base.h" />
+    <ClInclude Include="class2.h" />
+    <ClInclude Include="class3.h" />
+    <ClInclude Include="class4.h" />
+    <ClInclude Include="class5.h" />
+    <ClInclude Include="class6.h" />
     <ClInclude Include="other.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

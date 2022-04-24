@@ -1,16 +1,13 @@
 #include "base.h"
-
-Base::Base(Base* parent, int num, string name)
+Base::Base(Base* parent, string name)
 {
 	this->name = name;
 	this->parent = parent;
-	this->num = num;
 	if (parent != nullptr)
 	{
 		parent->children.push_back(this);
 	}
 }
-
 Base::~Base()
 {
 	for (int i = 0; i < children.size(); i++)
@@ -18,38 +15,27 @@ Base::~Base()
 		delete children[i];
 	}
 }
-
 void Base::set_name(string name)
 {
 	this->name = name;
 }
-
 string Base::get_name()
 {
 	return name;
 }
-
-
-void Base::print()
+void Base::print(string spaces)
 {
 	if (children.size() != 0)
 	{
-		Base* obj = this;
-		int k = 1;
+		spaces += "    ";
 		for (int i = 0; i < children.size(); i++)
 		{
-			while (obj->parent != nullptr)
-			{
-				k += 1;
-				obj = obj->parent;
-			}
-			for (int i = 0; i < k; i++) cout << "    ";
-			cout << children[i]->get_name() << endl;
-			children[i]->print();
+			cout << endl;
+			cout << spaces << children[i]->get_name();
+			children[i]->print(spaces);
 		}
 	}
 }
-
 void Base::set_parent(Base* new_parent)
 {
 	if (parent != nullptr)
@@ -58,7 +44,8 @@ void Base::set_parent(Base* new_parent)
 		{
 			if (parent->children[i] == (this))
 			{
-				parent->children.erase(parent -> children.begin() + i);
+				parent->children.erase(parent ->
+					children.begin() + i);
 			}
 		}
 		parent = new_parent;
@@ -68,12 +55,10 @@ void Base::set_parent(Base* new_parent)
 		parent->children.push_back(this);
 	}
 }
-
 Base* Base::get_parent()
 {
 	return parent;
 }
-
 Base* Base::get_obj_by_name(string name_obj)
 {
 	Base* parent_ptr;
@@ -91,14 +76,13 @@ Base* Base::get_obj_by_name(string name_obj)
 		{
 			if (parent_ptr->children.size() != 0)
 			{
-				obj_ptr=parent_ptr->get_obj_by_name(name_obj);
+				obj_ptr = parent_ptr->get_obj_by_name(name_obj);
 			}
 			if (obj_ptr != nullptr) return obj_ptr;
 		}
 	}
 	return obj_ptr;
 }
-
 void Base::set_status(int status)
 {
 	Base* obj = this;
@@ -107,28 +91,20 @@ void Base::set_status(int status)
 		if (obj->parent->status == 0) return;
 		obj = obj->parent;
 	}
-	this->status = status;
+	this->status = 1;
 }
-
-void Base::print_readiness()
+void Base::print_readiness(string spaces)
 {
+	if (status == 0) cout << " is not ready";
+	else cout << " is ready";
 	if (children.size() != 0)
 	{
-		Base* obj = this;
-		int k = 1;
-		for (int i = 0; i < children.size(); i++)
-		{
-			while (obj->parent != nullptr)
+		spaces += "    ";
+			for (int i = 0; i < children.size(); i++)
 			{
-				k += 1;
-				obj = obj->parent;
+				cout << endl;
+				cout << spaces << children[i]->get_name();
+				children[i]->print_readiness(spaces);
 			}
-			for (int i = 0; i < k; i++) cout << "    ";
-			cout << children[i]->get_name();
-			if (children[i]->status == 0) cout << " is not ready";
-			else cout << " is ready";
-			cout << endl;
-			children[i]->print_readiness();
-		}
 	}
 }
