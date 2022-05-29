@@ -14,5 +14,14 @@ public:
 	App(Base* parent) : Base(parent) {};
 	void build_tree_obj(); // метод построения исходного дерева иерархии объектов
 	int execute_app(); // метод запуска приложения
+	void signal(string& text)
+	{
+		cout << "\nSignal from " << absolute_path();
+		text += " (class: 1)";
+	}
+	void handler(string text)
+	{
+		cout << "\nSignal to " << absolute_path() << " Text: " << text;
+	}
 };
 #endif

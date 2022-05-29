@@ -1,5 +1,5 @@
 #include "app.h"
-#include "other.h"
+
 int main()
 {
 	App app(nullptr);
